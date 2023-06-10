@@ -1,6 +1,6 @@
 # Integrated Game Streaming Architecture
 
-__This project is currently under development and despite what this file may say, it does not demonstrate any functionality.__
+__This project is currently under development and despite what this file may say, it currently only demonstrates partial functionality of the planned system.__
 
 This project contains the source code for a game streaming architecture, which uses one server application to render and stream the perspective of multiple connected clients to dedicated client applications. 
 
@@ -11,7 +11,6 @@ Both the server and client application are written in C++ (compatible with C++20
 
 
 ## Table of Contents
----
 
 1. [Table of Contents](#table-of-contents)
 2. [Getting Started](#getting-started)                                                  \
@@ -21,14 +20,14 @@ Both the server and client application are written in C++ (compatible with C++20
     2.4. [Compilation](#compilation)                                                    \
     2.5. [Usage](#usage)                                                                \
     2.6. [Understanding the Project Structure](#understanding-the-project-structure)
-3. [External Libraries](#external-libraries)
-4. [Contributors](#contributors)
-5. [License](#license)
+3. [Development Overview](#development-overview)
+4. [External Libraries](#external-libraries)
+5. [Contributors](#contributors)
+6. [License](#license)
 
 
 
 ## Getting Started
----
 
 This section contains instructions on how to fetch a copy of the project files and either [open them in your chosen C++ IDE](#opening-in-an-ide) or [compile the source code](#compilation). \
 While an IDE can be used to compile the source code, the compilation instructions provided do not require an IDE to be used.
@@ -75,22 +74,36 @@ Instructions on how to use the two applications of this project will be provided
 
 A description of the project structure will be provided as development commences.
 
+
+
+## Development Overview
+
+To manage the development of this project, multiple phases have been planned so that features of the system can be implemented incrementally.
+
+As of now, there are four phases planned (but these are subject to change):
+
+- [ ] __Phase 1:__ Creating a basic server application, which should utilise OpenGL to render multiple player perspectives in a 3D game scene. Also adding basic user input detection to manipulate player perspectives.
+- [ ] __Phase 2:__ Creating a basic client application, which uses OpenGL to render an image to the user.
+- [ ] __Phase 3:__ Extending the server application to extract the rendered perspective of each player, and stream the perspective to the relevant connected client application to be rendered as images. The client application will further be extended to detect user inputs and stream the instructions to the server application to control the perspective of the relevant player.
+- [ ] __Phase 4:__ Implementing a video encoding algorithm to reduce the amount of data transmitted between the server and client applications.
+
+Currently the project is in phase one.
+
+
+
 ## External Libraries
----
 
 There are no external libraries are used by this project.
 
 
 
 ## Contributors
----
 
 This project is solely developed and managed by [Jonathon Macleod](https://github.com/JonathonMacleod).
 
 
 
 ## License
----
 
 This project is not currently available for use under any license.
 
