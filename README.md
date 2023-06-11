@@ -21,7 +21,8 @@ Both the server and client application are written in C++ (compatible with C++20
     2.5. [Usage](#usage)                                                                \
     2.6. [Understanding the Project Structure](#understanding-the-project-structure)
 3. [Development Overview](#development-overview)
-4. [External Libraries](#external-libraries)
+4. [External Libraries](#external-libraries)                                            \
+    4.1. [Spdlog](#spdlog)
 5. [Contributors](#contributors)
 6. [License](#license)
 
@@ -93,7 +94,14 @@ Currently the project is in phase one.
 
 ## External Libraries
 
-There are no external libraries are used by this project.
+### Spdlog
+
+The logging library spdlog (version 1.11.0) has been integrated into this project. \
+A copy of the source code for the integrated version of the library can be found at the GitHub repository [here](https://github.com/gabime/spdlog/releases/tag/v1.11.0). \
+This library has been used in accordance with the MIT license it was supplied with, a copy of which can be found [here](./libs/spdlog-v1-11-0/LICENSE). \
+Credit for this library is owed to the contributors of the original GitHub repository, and no modifications have been made.
+
+As spdlog uses the [fmt](https://github.com/fmtlib/fmt) library, this project is also produced in compliance with the fmt license, a copy of which can be found [here](./libs/fmt/LICENSE.rst).
 
 
 

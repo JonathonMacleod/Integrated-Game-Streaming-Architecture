@@ -13,116 +13,6 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 
 
--- Middleware Static-Library Project --
-project "Middleware"
-    location "Middleware"
-    kind "StaticLib"
-    language "C++"
-
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.hpp",
-        "%{prj.name}/src/**.cpp"
-    }
-
-    filter "system:windows"
-        cppdialect "C++20"
-        staticruntime "On"
-        systemversion "latest"
-
-        defines 
-        {
-            "GSA_PLATFORM_WINDOWS"
-        }
-
-        buildoptions
-        {
-            "/Zc:preprocessor"
-        }
-
-    filter "configurations:Debug"
-        defines 
-        {
-            "GSA_BUILD_DEBUG"
-        }
-
-    filter "configurations:Release"
-        defines 
-        {
-            "GSA_BUILD_RELEASE"
-        }
-
-        optimize "On"
-
-
-
--- Client Console-Application Project --
-project "Client"
-    location "Client"
-    kind "ConsoleApp"
-    language "C++"
-
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.hpp",
-        "%{prj.name}/src/**.cpp"
-    }
-
-    includedirs
-    {
-        "Middleware/src"
-    }
-
-    links 
-    {
-        "Middleware",
-        "opengl32.lib",
-        "user32.lib",
-        "gdi32.lib",
-        "shell32.lib",
-        "vcruntime.lib",
-        "msvcrt.lib"
-    }
-
-    filter "system:windows"
-        cppdialect "C++20"
-        staticruntime "On"
-        systemversion "latest"
-
-        defines 
-        {
-            "GSA_PLATFORM_WINDOWS"
-        }
-
-        buildoptions
-        {
-            "/Zc:preprocessor"
-        }
-
-    filter "configurations:Debug"
-        defines 
-        {
-            "GSA_BUILD_DEBUG"
-        }
-
-    filter "configurations:Release"
-        defines 
-        {
-            "GSA_BUILD_RELEASE"
-        }
-
-        optimize "On"
-
-
-
 -- Server Console-Application Project --
 project "Server"
     location "Server"
@@ -139,20 +29,19 @@ project "Server"
         "%{prj.name}/src/**.cpp"
     }
 
-    includedirs
-    {
-        "Middleware/src"
-    }
-
     links 
     {
-        "Middleware",
         "opengl32.lib",
         "user32.lib",
         "gdi32.lib",
         "shell32.lib",
         "vcruntime.lib",
         "msvcrt.lib"
+    }
+
+    includedirs
+    {
+        "libs/spdlog-v1-11-0/include"
     }
 
     filter "system:windows"
@@ -171,12 +60,20 @@ project "Server"
         }
 
     filter "configurations:Debug"
+        libdirs {
+            "libs/spdlog-v1-11-0/libs/Debug"
+        }
+
         defines 
         {
             "GSA_BUILD_DEBUG"
         }
 
     filter "configurations:Release"
+        libdirs {
+            "libs/spdlog-v1-11-0/libs/Release"
+        }
+
         defines 
         {
             "GSA_BUILD_RELEASE"
