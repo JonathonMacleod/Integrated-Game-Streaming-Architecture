@@ -31,17 +31,21 @@ project "Server"
 
     links 
     {
-        "opengl32.lib",
-        "user32.lib",
-        "gdi32.lib",
-        "shell32.lib",
-        "vcruntime.lib",
-        "msvcrt.lib"
+		"opengl32.lib",
+		"user32.lib",
+		"gdi32.lib",
+		"shell32.lib",
+		"vcruntime.lib",
+		"msvcrt.lib",
+
+		"libs/glfw-v3-3-8/libs/lib-vc2022/glfw3.lib"
     }
 
     includedirs
     {
-        "libs/spdlog-v1-11-0/include"
+        "libs/spdlog-v1-11-0/include",
+        "libs/glew-v2-1-0/include",
+        "libs/glfw-v3-3-8/include"
     }
 
     filter "system:windows"
@@ -49,9 +53,14 @@ project "Server"
         staticruntime "On"
         systemversion "latest"
 
+        links {
+            "libs/glew-v2-1-0/libs/Release/x64/glew32s.lib"
+        }
+    
         defines 
         {
-            "GSA_PLATFORM_WINDOWS"
+            "GSA_PLATFORM_WINDOWS",
+            "GLEW_STATIC"
         }
 
         buildoptions
