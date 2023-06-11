@@ -1,16 +1,15 @@
-#include <iostream>
-
 #include "spdlog/spdlog.h"
+#include "graphics/Graphics.h"
 
-#include <GL/glew.h>
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include "graphics/Shaders.h"
 
 int main(int argc, char* args[]) {
+	spdlog::set_level(spdlog::level::trace);
+
 	// Initialise GLFW
 	if(!glfwInit()) {
-		fprintf(stderr, "Failed to initialise GLFW\n");
-		return EXIT_FAILURE;
+		spdlog::error("Failed to initialise GLFW");
+		return -1;
 	}
 
 	// Create GLFW window
@@ -20,13 +19,27 @@ int main(int argc, char* args[]) {
 	// Initialise GLEW
 	GLenum err = glewInit();
 	if(GLEW_OK != err) {
-		fprintf(stderr, "GLEW error: %s\n", glewGetErrorString(err));
-		return EXIT_FAILURE;
+		spdlog::error("GLEW error occurred: {}", (char*) glewGetErrorString(err));
+		return -1;
 	}
-	fprintf(stdout, "Using GLEW %s\n", glewGetString(GLEW_VERSION));
+	spdlog::info("Using GLEW {}", (char*) glewGetString(GLEW_VERSION));
 
-	// Test spdlog
-	spdlog::info("tpdlog test output");
+	// Attempt to create a test shader program
+	GSA::Graphics::ShaderProgram* shaders = GSA::Graphics::ShaderProgram::GetShaderProgram("test", "res/shaders/shader_test");
+	if(shaders == NULL) 
+		spdlog::error("Failed to create test shader program");
+	else
+		spdlog::trace("Successfully created test shader program");
+
+	while(true) {
+		// Just keep the window open
+		glfwPollEvents();
+		glfwSwapBuffers(window);
+
+		if(glfwWindowShouldClose(window)) {
+			break;
+		}
+	}
 
 	// Destroy GLFW window
 	glfwDestroyWindow(window);
@@ -34,5 +47,5 @@ int main(int argc, char* args[]) {
 	// Terminate GLFW
 	glfwTerminate();
 
-	return EXIT_SUCCESS;
+	return 0;
 }
