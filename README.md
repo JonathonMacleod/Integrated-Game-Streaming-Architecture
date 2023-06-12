@@ -20,9 +20,10 @@ Both the server and client application are written in C++ (compatible with C++20
     2.4. [Compilation](#compilation)                                                    \
     2.5. [Usage](#usage)                                                                \
     2.6. [Understanding the Project Structure](#understanding-the-project-structure)
-3. [Development Overview](#development-overview)
+3. [Development Overview](#development-overview)                                        \
+    3.1. [Phase One](#phase-one)
 4. [External Libraries](#external-libraries)                                            \
-    4.1. [Spdlog](#spdlog)
+    4.1. [Spdlog](#spdlog)                                                              \
     4.2. [GLEW](#glew)
 5. [Contributors](#contributors)
 6. [License](#license)
@@ -91,6 +92,11 @@ As of now, there are four phases planned (but these are subject to change):
 
 Currently the project is in phase one.
 
+### Phase One
+
+So far during phase one, a server application has been created using [spdlog](#spdlog) to manage logging, [GLEW](#glew) to interact with the OpenGL rendering API, and [GLFW](#glfw) to create a window with an OpenGL context.     \
+Basic code has also been written to load GLSL shader programs into OpenGL.
+
 
 
 ## External Libraries
@@ -113,7 +119,7 @@ Credit for this library is owed to the contributors of the original GitHub repos
 
 ### GLFW
 
-The GLFW library (version 3.3.8) has been used to create application windows and detect user inputs.                                                                    \   
+The GLFW library (version 3.3.8) has been used to create application windows and detect user inputs.                                                                    \
 A copy of the source code for the integrated version of the library can be found at the GitHub repository [here](https://github.com/glfw/glfw/releases/tag/3.3.8).      \
 This library has been used in accordance with the zlib/libpng license, a copy of which can be found [here](./libs/glfw-v3-3-8/LICENSE.md).                              \
 Credit for this library is owed to the contributors of the original GitHub repository, and no modifications have been made.
