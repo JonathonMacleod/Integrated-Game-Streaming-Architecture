@@ -4,16 +4,8 @@
 #include "graphics/Shaders.h"
 #include "graphics/Models.h"
 
-#include <glm/glm.hpp>
-
 int main(int argc, char* args[]) {
 	spdlog::set_level(spdlog::level::trace);
-
-	// Test GLM inclusion
-	glm::vec3 test(1, 2, 3);
-	spdlog::trace("Test GLM vec3 value x: {}", test.x);
-	spdlog::trace("Test GLM vec3 value y: {}", test.y);
-	spdlog::trace("Test GLM vec3 value z: {}", test.z);
 
 	// Initialise GLFW
 	if(!glfwInit()) {
@@ -40,31 +32,16 @@ int main(int argc, char* args[]) {
 	else
 		spdlog::trace("Successfully created test shader program");
 
-	// Create a triangle model
-	constexpr float triangleVertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		 0.0f,  0.5f, 0.0f
-	};
-	constexpr unsigned int triangleIndices[] = {
-		0,  1,  2
-	};
-	constexpr float triangleColours[] = {
-		0.8f, 0.2f, 0.0f,
-		0.0f, 0.8f, 0.2f,
-		0.2f, 0.0f, 0.8f
-	};
-	GSA::Graphics::Model* triangleModel = new GSA::Graphics::Model();
-	triangleModel->Set3DPositionsBuffer(triangleVertices, sizeof(triangleVertices));
-	triangleModel->SetColoursBuffer(triangleColours, sizeof(triangleColours));
-	triangleModel->SetIndexBuffer(triangleIndices, sizeof(triangleIndices));
+
+	// Create a cube model
+	GSA::Graphics::Model* cubeModel = GSA::Graphics::Model::CreateColouredCube(glm::vec3(0.8f, 0.2f, 0.0f), glm::vec3(0.0f, 0.8f, 0.2f), glm::vec3(0.2f, 0.0f, 0.8f));
 
 	// Keep a window alive until closed and draw some contents to the screen
 	while(!glfwWindowShouldClose(window)) {
 		// Draw the triangle!
 		if(shader != NULL) {
 			shader->Bind();
-			triangleModel->Draw();
+			cubeModel->Draw();
 			shader->Unbind();
 		}
 
@@ -77,7 +54,7 @@ int main(int argc, char* args[]) {
 	glfwDestroyWindow(window);
 
 	// Cleanup
-	delete triangleModel;
+	delete cubeModel;
 	delete shader;
 
 	// Terminate GLFW
