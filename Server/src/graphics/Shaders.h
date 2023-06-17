@@ -4,6 +4,8 @@
 	#include <string>
 	#include <vector>
 	
+	#include <glm/mat4x4.hpp>
+
 	#include "Graphics.h"
 
 	namespace GSA::Graphics {
@@ -17,6 +19,8 @@
 
 				void Bind() const;
 				void Unbind() const;
+
+				void SetUniformMatrix4(GLint uniformLocation, const glm::mat4& matrix) const;
 
 			private:
 				ShaderProgram(GLuint programId);

@@ -1,6 +1,7 @@
 #include "Shaders.h"
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -145,5 +146,9 @@ namespace GSA::Graphics {
 
 	void ShaderProgram::Bind() const { glUseProgram(m_ShaderProgramId); }
 	void ShaderProgram::Unbind() const { glUseProgram(0); }
+
+	void ShaderProgram::SetUniformMatrix4(GLint uniformLocation, const glm::mat4& matrix) const {
+		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
 
 }
