@@ -96,8 +96,12 @@ Currently the project is in phase one.
 
 ### Phase One
 
-So far during phase one, a server application has been created using [spdlog](#spdlog) to manage logging, [GLEW](#glew) to interact with the OpenGL rendering API, and [GLFW](#glfw) to create a window with an OpenGL context.     \
-Basic code has also been written to load GLSL shader programs into OpenGL.
+So far during phase one, a server application has been created using [spdlog](#spdlog) to manage logging.
+The external library [GLEW](#glew) has also been implemented to provide a C++ interface to interact with the OpenGL rendering API, while the [GLFW](#glfw) library has been used to create a window with an OpenGL context.
+Instead of providing a bespoke implementation of the mathematical functions required for 3D rendering, the [GLM](#glm) library has been included in the project. 
+
+Basic code has also been written to load GLSL shader programs and create 3D models.
+Models have also been wrapped into entities, with position and scale information, to provide a cleaner interface.
 
 
 
