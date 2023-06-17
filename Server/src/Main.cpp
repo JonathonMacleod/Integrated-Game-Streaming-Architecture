@@ -6,6 +6,7 @@
 
 #include "graphics/Shaders.h"
 #include "graphics/Models.h"
+#include "graphics/Entities.h"
 
 //
 // Internal Functionality
@@ -77,31 +78,25 @@ int main(int argc, char* args[]) {
 	else
 		spdlog::trace("Successfully created test shader program");
 
-	// Create a cube model
+	// Create models
 	GSA::Graphics::Model* cubeModel = GSA::Graphics::Model::CreateColouredCube(GetColour("031D44"), GetColour("04395E"),
 																			   GetColour("70A288"), GetColour("DAB785"),
 																			   GetColour("D5896F"), GetColour("FFA0FD"));
-
-	// Create surface models
 	GSA::Graphics::Model* surfaceModel = GSA::Graphics::Model::CreateColouredCube(GetColour("304D6D"), GetColour("304D6D"), 
 																				  GetColour("A7CCED"), GetColour("A7CCED"), 
 																				  GetColour("63ADF2"), GetColour("63ADF2"));
 
-	// Create model transform matrices
-	glm::mat4 cubeModelMatrix = glm::mat4(1);
-	cubeModelMatrix = glm::scale(cubeModelMatrix, glm::vec3(0.5f, 0.5f, 0.5f));
-	glm::mat4 leftWallModelMatrix = glm::mat4(1);
-	leftWallModelMatrix = glm::translate(leftWallModelMatrix, glm::vec3(2.125f, 0.0f, 0));
-	leftWallModelMatrix = glm::scale(leftWallModelMatrix, glm::vec3(0.25f, 3.5f, 3.0f));
-	glm::mat4 rightWallModelMatrix = glm::mat4(1);
-	rightWallModelMatrix = glm::translate(rightWallModelMatrix, glm::vec3(-2.125f, 0.0f, 0));
-	rightWallModelMatrix = glm::scale(rightWallModelMatrix, glm::vec3(0.25f, 3.5f, 3.0f));
-	glm::mat4 backWallModelMatrix = glm::mat4(1);
-	backWallModelMatrix = glm::translate(backWallModelMatrix, glm::vec3(0.0f, 0.0f, 1.625f));
-	backWallModelMatrix = glm::scale(backWallModelMatrix, glm::vec3(4.0f, 3.5f, 0.25f));
-	glm::mat4 bottomFloorModelMatrix = glm::mat4(1);
-	bottomFloorModelMatrix = glm::translate(bottomFloorModelMatrix, glm::vec3(0.0f, -1.625f, 0.0f));
-	bottomFloorModelMatrix = glm::scale(bottomFloorModelMatrix, glm::vec3(4.0f, 0.25f, 3.0f));
+	// Create entities
+	GSA::Graphics::Entity cubeEntity(cubeModel);
+	cubeEntity.SetScale(0.5f, 0.5f, 0.5f);
+	GSA::Graphics::Entity leftWallEntity(surfaceModel);
+	leftWallEntity.SetTranslation(2.125f, 0.0f, 0.0f)->SetScale(0.25f, 3.5f, 3.0f);
+	GSA::Graphics::Entity rightWallEntity(surfaceModel);
+	rightWallEntity.SetTranslation(-2.125f, 0.0f, 0.0f)->SetScale(0.25f, 3.5f, 3.0f);
+	GSA::Graphics::Entity backWallEntity(surfaceModel);
+	backWallEntity.SetTranslation(0.0f, 0.0f, 1.625f)->SetScale(4.0f, 3.5f, 0.25f);
+	GSA::Graphics::Entity bottomFloorEntity(surfaceModel);
+	bottomFloorEntity.SetTranslation(0.0f, -1.625f, 0.0f)->SetScale(4.0f, 0.25f, 3.0f);
 
 	// Create view and perspective matrices
 	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, -4.0f), glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -119,18 +114,13 @@ int main(int argc, char* args[]) {
 			shader->SetUniformMatrix4(2, perspectiveMatrix);
 
 			// Draw the cube
-			shader->SetUniformMatrix4(1, cubeModelMatrix);
-			cubeModel->Draw();
+			cubeEntity.Draw(shader);
 
 			// Draw the surfaces
-			shader->SetUniformMatrix4(1, leftWallModelMatrix);
-			surfaceModel->Draw();
-			shader->SetUniformMatrix4(1, rightWallModelMatrix);
-			surfaceModel->Draw();
-			shader->SetUniformMatrix4(1, backWallModelMatrix);
-			surfaceModel->Draw();
-			shader->SetUniformMatrix4(1, bottomFloorModelMatrix);
-			surfaceModel->Draw();
+			leftWallEntity.Draw(shader);
+			rightWallEntity.Draw(shader);
+			backWallEntity.Draw(shader);
+			bottomFloorEntity.Draw(shader);
 
 			shader->Unbind();
 		}
@@ -145,6 +135,7 @@ int main(int argc, char* args[]) {
 
 	// Cleanup
 	delete cubeModel;
+	delete surfaceModel;
 	delete shader;
 
 	// Terminate GLFW
