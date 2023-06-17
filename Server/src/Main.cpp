@@ -2,6 +2,7 @@
 #include "graphics/Graphics.h"
 
 #include "graphics/Shaders.h"
+#include "graphics/Models.h"
 
 int main(int argc, char* args[]) {
 	spdlog::set_level(spdlog::level::trace);
@@ -25,24 +26,50 @@ int main(int argc, char* args[]) {
 	spdlog::info("Using GLEW {}", (char*) glewGetString(GLEW_VERSION));
 
 	// Attempt to create a test shader program
-	GSA::Graphics::ShaderProgram* shaders = GSA::Graphics::ShaderProgram::GetShaderProgram("test", "res/shaders/shader_test");
-	if(shaders == NULL) 
+	GSA::Graphics::ShaderProgram* shader = GSA::Graphics::ShaderProgram::GetShaderProgram("test", "res/shaders/shader_test");
+	if(shader == NULL)
 		spdlog::error("Failed to create test shader program");
 	else
 		spdlog::trace("Successfully created test shader program");
 
-	while(true) {
-		// Just keep the window open
-		glfwPollEvents();
-		glfwSwapBuffers(window);
+	// Create a triangle model
+	constexpr float triangleVertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.0f,  0.5f, 0.0f
+	};
+	constexpr unsigned int triangleIndices[] = {
+		0,  1,  2
+	};
+	constexpr float triangleColours[] = {
+		0.8f, 0.2f, 0.0f,
+		0.0f, 0.8f, 0.2f,
+		0.2f, 0.0f, 0.8f
+	};
+	GSA::Graphics::Model* triangleModel = new GSA::Graphics::Model();
+	triangleModel->Set3DPositionsBuffer(triangleVertices, sizeof(triangleVertices));
+	triangleModel->SetColoursBuffer(triangleColours, sizeof(triangleColours));
+	triangleModel->SetIndexBuffer(triangleIndices, sizeof(triangleIndices));
 
-		if(glfwWindowShouldClose(window)) {
-			break;
+	while(!glfwWindowShouldClose(window)) {
+		// Draw the triangle!
+		if(shader != NULL) {
+			shader->Bind();
+			triangleModel->Draw();
+			shader->Unbind();
 		}
+
+		// Check for inputs and show any graphics drawn
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 
 	// Destroy GLFW window
 	glfwDestroyWindow(window);
+
+	// Cleanup
+	delete triangleModel;
+	delete shader;
 
 	// Terminate GLFW
 	glfwTerminate();

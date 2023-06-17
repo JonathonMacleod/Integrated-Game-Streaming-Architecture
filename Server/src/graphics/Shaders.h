@@ -12,14 +12,14 @@
 			public:
 				static ShaderProgram* GetShaderProgram(const std::string& shaderName, const std::string& shaderDirectory);
 
-			private:
-				ShaderProgram(GLuint programId);
-
 			public:
 				~ShaderProgram();
 
 				void Bind() const;
 				void Unbind() const;
+
+			private:
+				ShaderProgram(GLuint programId);
 
 			private:
 				GLuint m_ShaderProgramId = 0;

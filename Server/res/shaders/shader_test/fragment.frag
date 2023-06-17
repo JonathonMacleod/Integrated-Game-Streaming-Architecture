@@ -1,7 +1,9 @@
 #version 430
 
-layout(location = 0) out vec4 oColour;
+in vec3 v2fColour;
+
+layout(location = 0) out vec3 oColour;
 
 void main() {
-	oColour = vec4(1, 1, 1, 1);
+	oColour = v2fColour;
 }
