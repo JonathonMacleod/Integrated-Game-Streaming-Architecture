@@ -45,7 +45,8 @@ project "Server"
     {
         "libs/spdlog-v1-11-0/include",
         "libs/glew-v2-1-0/include",
-        "libs/glfw-v3-3-8/include"
+        "libs/glfw-v3-3-8/include",
+        "libs/glm-v0-9-9-8/src",
     }
 
     filter "system:windows"

@@ -24,7 +24,9 @@ Both the server and client application are written in C++ (compatible with C++20
     3.1. [Phase One](#phase-one)
 4. [External Libraries](#external-libraries)                                            \
     4.1. [Spdlog](#spdlog)                                                              \
-    4.2. [GLEW](#glew)
+    4.2. [GLEW](#glew)                                                                  \
+    4.3. [GLFW](#glfw)                                                                  \
+    4.4. [GLM](#glm)
 5. [Contributors](#contributors)
 6. [License](#license)
 
@@ -122,6 +124,13 @@ Credit for this library is owed to the contributors of the original GitHub repos
 The GLFW library (version 3.3.8) has been used to create application windows and detect user inputs.                                                                    \
 A copy of the source code for the integrated version of the library can be found at the GitHub repository [here](https://github.com/glfw/glfw/releases/tag/3.3.8).      \
 This library has been used in accordance with the zlib/libpng license, a copy of which can be found [here](./libs/glfw-v3-3-8/LICENSE.md).                              \
+Credit for this library is owed to the contributors of the original GitHub repository, and no modifications have been made.
+
+### GLM
+
+The OpenGL Mathematics (GLM) library (version 0.9.9.8) has been used to perform general rendering calculations.                                                                                                                             \
+A copy of the source code for the library has been included within this project [here](./libs/glm-v0-9-9-8/src/), while the original respository for the project can be found [here](https://github.com/g-truc/glm/releases/tag/0.9.9.8).   \
+This library has been used in accordance with the The Happy Bunny License or MIT License it was supplied with, a copy of which can be found [here](./libs/glm-v0-9-9-8/copying.txt).                                                        \
 Credit for this library is owed to the contributors of the original GitHub repository, and no modifications have been made.
 
 

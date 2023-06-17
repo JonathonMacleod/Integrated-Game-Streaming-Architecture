@@ -4,8 +4,16 @@
 #include "graphics/Shaders.h"
 #include "graphics/Models.h"
 
+#include <glm/glm.hpp>
+
 int main(int argc, char* args[]) {
 	spdlog::set_level(spdlog::level::trace);
+
+	// Test GLM inclusion
+	glm::vec3 test(1, 2, 3);
+	spdlog::trace("Test GLM vec3 value x: {}", test.x);
+	spdlog::trace("Test GLM vec3 value y: {}", test.y);
+	spdlog::trace("Test GLM vec3 value z: {}", test.z);
 
 	// Initialise GLFW
 	if(!glfwInit()) {
@@ -51,6 +59,7 @@ int main(int argc, char* args[]) {
 	triangleModel->SetColoursBuffer(triangleColours, sizeof(triangleColours));
 	triangleModel->SetIndexBuffer(triangleIndices, sizeof(triangleIndices));
 
+	// Keep a window alive until closed and draw some contents to the screen
 	while(!glfwWindowShouldClose(window)) {
 		// Draw the triangle!
 		if(shader != NULL) {
