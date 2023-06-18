@@ -1,9 +1,9 @@
 #include <spdlog/spdlog.h>
 
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "graphics/Graphics.h"
 
+#include "graphics/Cameras.h"
 #include "graphics/Shaders.h"
 #include "graphics/Models.h"
 #include "graphics/Entities.h"
@@ -98,20 +98,22 @@ int main(int argc, char* args[]) {
 	GSA::Graphics::Entity bottomFloorEntity(surfaceModel);
 	bottomFloorEntity.SetTranslation(0.0f, -1.625f, 0.0f)->SetScale(4.0f, 0.25f, 3.0f);
 
-	// Create view and perspective matrices
-	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, -4.0f), glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 perspectiveMatrix = glm::perspectiveFov(16.0f / 9.0f, 640.f, 480.f, 0.01f, 100.0f);
+	// Create camera
+	GSA::Graphics::Camera camera(640.0f, 480.f, 60.0f, 0.01f, 100.0f);
+	camera.SetPosition(0.0f, 0.0f, -4.5f);
 
 	// Keep a window alive until closed and draw some contents to the screen
 	while(!glfwWindowShouldClose(window)) {
 		// Clear the graphics context of any previously drawn graphics
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		camera.Rotate(0.0003f, 0.00005f);
+
 		// Draw the triangle!
 		if(shader != NULL) {
 			shader->Bind();
-			shader->SetUniformMatrix4(0, viewMatrix);
-			shader->SetUniformMatrix4(2, perspectiveMatrix);
+			shader->SetUniformMatrix4(0, camera.GetViewMatrix());
+			shader->SetUniformMatrix4(2, camera.GetPerspectiveMatrix());
 
 			// Draw the cube
 			cubeEntity.Draw(shader);
