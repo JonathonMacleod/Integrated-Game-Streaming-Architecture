@@ -39,6 +39,17 @@ static glm::vec3 GetColour(const std::string& hex) {
 
 
 
+// Input Functionality
+
+static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if(action == GLFW_PRESS) {
+		if(key == GLFW_KEY_W)
+			
+	}
+}
+
+
+
 //
 // Main Function
 //
@@ -107,7 +118,7 @@ int main(int argc, char* args[]) {
 		// Clear the graphics context of any previously drawn graphics
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		camera.Rotate(0.0003f, 0.00005f);
+		camera.Rotate(0.0003f, 0.00000f);
 
 		// Draw the triangle!
 		if(shader != NULL) {
